@@ -1,5 +1,6 @@
-import Image from "next/image";
+'use client'
 import { GlareCard } from "@/components/ui/glare-card";
+import Image from 'next/image';
 
 const moodList = [
   {
@@ -40,25 +41,25 @@ const moodList = [
   },
 ]
 
-export default async function Home() {
+export default function MoodSelection() {
+  const handleMoodSelected = (mood: string) => {
+    fetch("/api/stats", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ mood }),
+    });
+  }
 
   return (
-    <div className="flex flex-col">
-      <div className="flex gap-3 justify-center items-center w-full h-[500px] bg-secondary">
-        <div className="flex flex-col gap-3 items-center justify-center">
-          <h1 className="text-6xl font-bold">Find Your Perfect Playlist!</h1>
-          <p className="text-3xl">Let your mood decide what you listen to.</p>
-          <button className="w-fit px-6 py-3 rounded-full mt-4 bg-primary border border-dark hover:scale-105 hover:bg-dark hover:text-light duration-300">
-            <a href="/mood" className="font-bold">Get Started</a>
-          </button>
-        </div>
-      </div>
-      <div className="flex flex-col gap-3 justify-center items-center w-full min-h-screen bg-gradient-to-b from-secondary to-dark">
-        <div className="flex flex-col gap-20 items-center justify-center text-light">
-          <h1 className="text-4xl font-bold text-dark">Select your mood and let us do the rest</h1>
-          <div className="grid grid-cols-3 gap-2 mx-52">
-            {moodList.map((mood) => (
-              <GlareCard key={mood.title} className="flex items-center justify-between gap-5 px-6 py-6 cursor-pointer text-white">
+    <>
+      <div className="flex flex-col gap-10 items-center justify-center h-screen bg-gradient-to-b from-accent to-dark">
+        <h1 className="text-4xl font-bold mb-6">What&apos;s Your Mood?</h1>
+        <div className="grid grid-cols-2 gap-4">
+          {moodList && moodList.map((mood) => (
+            <a key={mood.link} href={`/recommendations?mood=${mood.link}`} onClick={() => handleMoodSelected(mood.title)} className='cursor-pointer '>
+              <GlareCard key={mood.link} className="flex items-center justify-between gap-5 px-6 py-6 cursor-pointer text-white">
                 <div className="flex flex-col gap-2">
                   <h1 className="text-2xl font-bold">{mood.title}</h1>
                   <p className="text-sm">{mood.description}</p>
@@ -67,11 +68,10 @@ export default async function Home() {
                   <Image src={mood.image} alt={mood.title} className="rounded-3xl" fill objectFit="cover" />
                 </div>
               </GlareCard>
-            ))}
-          </div>
+            </a>
+          ))}
         </div>
       </div>
-    </div>
-
+    </>
   );
 }
