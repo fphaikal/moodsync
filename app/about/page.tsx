@@ -5,7 +5,7 @@ export default function About() {
         <h1 className="font-bold text-5xl mb-5">
           About MoodSync
         </h1>
-        <p className="text-lg">Moodify is designed to match your mood with the perfect playlist. <br />Whether you’re feeling happy, sad, or just need to relax, we’ve got you covered!</p>
+        <p className="text-lg">Moodsync is designed to match your mood with the perfect playlist. <br />Whether you’re feeling happy, sad, or just need to relax, we’ve got you covered!</p>
       </div>
     </div>
   )
